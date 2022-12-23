@@ -16,7 +16,7 @@ class BookAdmin(admin.ModelAdmin):
     list_display_links = ('title','author')
     list_editable = ['rating']
     list_filter = ['author']
-    search_fields = ['title']
+    search_fields = ['title','author__name']
     #inlines = [inlineAuthor]
 class AuthorAdmin(admin.ModelAdmin):
     fields = ('name','birth_date','rating')

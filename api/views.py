@@ -8,18 +8,25 @@ from rest_framework.views import APIView
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 # GET POST DELETE PUT wit ViewSets.
 class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name','rating','birth_date']
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title','author__name']
 # Function Based Views
 #GET POST
 @api_view(['GET','POST'])
